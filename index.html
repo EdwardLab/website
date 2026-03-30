@@ -3,501 +3,629 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edward Hsing | Systems, Infrastructure, and Open Technology</title>
-  <meta name="description" content="Edward Hsing builds internet infrastructure, operating systems, and open technology. Founder of DigitalPlat and EdgeAlphix LLC." />
+  <title>Edward Hsing | Open-Source Infrastructure Engineer</title>
+  <meta name="description" content="Edward Hsing is the founder of DigitalPlat Foundation and EdgeAlphix LLC. He builds DNS infrastructure, operating systems, and networking software used in production." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://edwarddev.com/" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Edward Hsing | Systems, Infrastructure, and Open Technology" />
-  <meta property="og:description" content="Founder of DigitalPlat and EdgeAlphix LLC. Building internet infrastructure, operating systems, and open technology." />
+  <meta property="og:title" content="Edward Hsing | Open-Source Infrastructure Engineer" />
+  <meta property="og:description" content="Founder of DigitalPlat Foundation and EdgeAlphix LLC. Building DNS infrastructure, operating systems, and networking software used in production." />
   <meta property="og:url" content="https://edwarddev.com/" />
   <meta property="og:site_name" content="Edward Hsing" />
-
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Edward Hsing | Systems, Infrastructure, and Open Technology" />
-  <meta name="twitter:description" content="Founder of DigitalPlat and EdgeAlphix LLC. Building internet infrastructure, operating systems, and open technology." />
-
+  <meta name="twitter:title" content="Edward Hsing | Open-Source Infrastructure Engineer" />
+  <meta name="twitter:description" content="DNS infrastructure, operating systems, container systems, and networking software built for real use." />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Edward Hsing",
+    "alternateName": "Yujie Xing",
     "url": "https://edwarddev.com/",
-    "jobTitle": "Founder",
-    "description": "Edward Hsing builds internet infrastructure, operating systems, and open technology.",
+    "jobTitle": "Open-Source Infrastructure Engineer",
+    "description": "Edward Hsing builds and operates DNS infrastructure, operating systems, and networking software used on the public internet.",
     "sameAs": [
-      "https://github.com/DigitalPlatDev",
-      "https://domain.digitalplat.org/",
+      "https://github.com/EdwardLab",
+      "https://orcid.org/0009-0003-8283-8615",
       "https://edgealphix.com/",
+      "https://digitalplat.org/",
+      "https://domain.digitalplat.org/",
       "https://opensource.ngo/"
     ],
     "worksFor": [
-      {
-        "@type": "Organization",
-        "name": "EdgeAlphix LLC"
-      },
-      {
-        "@type": "Organization",
-        "name": "DigitalPlat"
-      }
+      { "@type": "Organization", "name": "EdgeAlphix LLC" },
+      { "@type": "Organization", "name": "DigitalPlat Foundation" }
     ]
   }
   </script>
-
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #fafafa;
-      --text: #111827;
-      --muted: #6b7280;
-      --line: #e5e7eb;
-      --strong: #0f172a;
-      --link: #0f172a;
-      --max: 900px;
+      --bg: #f4ede3;
+      --panel: rgba(255, 251, 244, 0.8);
+      --text: #1f1a17;
+      --muted: #64584f;
+      --line: rgba(69, 52, 39, 0.15);
+      --accent: #9d3c20;
+      --accent-2: #1f4b47;
+      --accent-3: #d79b35;
+      --shadow: 0 18px 48px rgba(67, 44, 24, 0.12);
+      --radius: 28px;
+      --max: 1280px;
     }
-
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      font-family: "Space Grotesk", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(215, 155, 53, 0.18), transparent 32%),
+        radial-gradient(circle at top right, rgba(31, 75, 71, 0.14), transparent 28%),
+        linear-gradient(180deg, #fbf5eb 0%, #f4ede3 58%, #efe4d4 100%);
       color: var(--text);
       line-height: 1.65;
+      min-height: 100vh;
     }
-
-    a {
-      color: var(--link);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(69, 52, 39, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(69, 52, 39, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent 88%);
     }
-
-    img { max-width: 100%; display: block; }
-
-    .wrap {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
+    a { color: inherit; text-decoration: none; }
+    p { margin: 0; }
+    .shell { width: min(calc(100% - 48px), var(--max)); margin: 0 auto; }
     .site-header {
       position: sticky;
       top: 0;
-      z-index: 20;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
+      z-index: 30;
+      backdrop-filter: blur(16px);
+      background: rgba(244, 237, 227, 0.72);
       border-bottom: 1px solid var(--line);
     }
-
-    .nav {
+    .topbar {
+      min-height: 78px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 20px;
-      min-height: 68px;
     }
-
-    .brand {
-      font-size: 0.98rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--strong);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      font-size: 0.95rem;
-    }
-
-    .nav-links a {
-      text-decoration: none;
+    .brand { display: inline-flex; flex-direction: column; gap: 2px; }
+    .brand-name { font-size: 1rem; font-weight: 700; letter-spacing: -0.03em; }
+    .brand-role, .eyebrow, .micro-label, .meta {
+      font-family: "IBM Plex Mono", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
       color: var(--muted);
     }
-
-    .nav-links a:hover { color: var(--strong); }
-
+    .brand-role { font-size: 0.72rem; }
+    .nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 16px; }
+    .nav a {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+    .nav a:hover, .nav a:focus-visible, .inline-link:hover, .inline-link:focus-visible { color: var(--accent); }
+    main { padding: 40px 0 96px; }
+    section { margin-top: 28px; }
     .hero {
-      padding: 72px 0 40px;
+      position: relative;
+      overflow: hidden;
+      padding: 56px;
+      border: 1px solid var(--line);
+      border-radius: calc(var(--radius) + 10px);
+      background:
+        radial-gradient(circle at 80% 12%, rgba(215, 155, 53, 0.24), transparent 20%),
+        linear-gradient(135deg, rgba(255, 251, 244, 0.95), rgba(244, 231, 213, 0.92));
+      box-shadow: var(--shadow);
     }
-
-    .eyebrow {
-      color: var(--muted);
-      font-size: 0.92rem;
-      margin-bottom: 14px;
+    .hero-layout, .panel-grid, .project-grid, .stack-grid, .coverage-grid, .closing-grid {
+      display: grid;
+      gap: 24px;
     }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2.4rem, 5vw, 4.8rem);
-      line-height: 1.02;
-      letter-spacing: -0.04em;
-      color: var(--strong);
-    }
-
-    .lead {
-      margin-top: 22px;
-      font-size: 1.12rem;
-      color: #374151;
-      max-width: 760px;
-    }
-
-    .hero-actions {
-      margin-top: 28px;
+    .hero-layout { grid-template-columns: minmax(0, 1.45fr) minmax(360px, 0.82fr); align-items: center; }
+    .panel-grid { grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr); }
+    .project-grid, .stack-grid, .coverage-grid, .closing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .eyebrow { font-size: 0.78rem; margin-bottom: 20px; }
+    h1, h2, h3 { margin: 0; line-height: 1; letter-spacing: -0.05em; font-weight: 700; }
+    h1 { max-width: 10.5ch; font-size: clamp(3.2rem, 7vw, 6rem); line-height: 0.94; }
+    h2 { font-size: clamp(2rem, 4vw, 3.2rem); margin-top: 10px; }
+    .hero-copy p { margin-top: 26px; max-width: 62ch; font-size: 1.14rem; color: #342c28; }
+    .hero-actions, .link-row, .meta-row, .footer-links {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
+      margin-top: 18px;
     }
-
-    .button,
-    .button-secondary {
+    .button, .button-muted {
+      min-height: 48px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 0 16px;
+      padding: 0 18px;
       border-radius: 999px;
-      text-decoration: none;
+      border: 1px solid transparent;
       font-weight: 600;
+      transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+    }
+    .button:hover, .button-muted:hover, .button:focus-visible, .button-muted:focus-visible { transform: translateY(-2px); }
+    .button { background: var(--text); color: #fff7ed; border-color: var(--text); }
+    .button-muted { border-color: rgba(31, 26, 23, 0.14); background: rgba(255, 251, 244, 0.56); color: var(--text); }
+    .hero-panel, .card, .feature, .timeline-card, .quote-card {
+      padding: 30px;
+      border-radius: var(--radius);
       border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 14px 34px rgba(67, 44, 24, 0.08);
     }
-
-    .button {
-      background: var(--strong);
-      color: #fff;
-      border-color: var(--strong);
-    }
-
-    .button-secondary {
-      background: #fff;
-      color: var(--strong);
-    }
-
-    .stats {
-      margin-top: 34px;
+    .hero-panel { background: rgba(255, 251, 244, 0.72); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7); }
+    .hero-panel h2, .card h3, .feature h3, .timeline-card h3, .quote-card h3 { font-size: 1.55rem; line-height: 1.05; }
+    .hero-list { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 16px; }
+    .hero-list li {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .stat {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 18px;
-      background: var(--surface);
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.1rem;
-      color: var(--strong);
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    section {
-      padding: 34px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    h2 {
-      margin: 0 0 14px;
-      font-size: 1.6rem;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-      color: var(--strong);
-    }
-
-    .section-intro {
-      margin: 0 0 22px;
-      color: #4b5563;
-      max-width: 760px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 22px;
-      background: #fff;
-    }
-
-    .card h3 {
-      margin: 0 0 10px;
-      font-size: 1.12rem;
-      color: var(--strong);
-    }
-
-    .card p {
-      margin: 0;
-      color: #4b5563;
-    }
-
-    .card ul {
-      margin: 14px 0 0;
-      padding-left: 18px;
-      color: #4b5563;
-    }
-
-    .compact-list {
-      margin: 0;
-      padding-left: 18px;
-      color: #374151;
-    }
-
-    .compact-list li + li { margin-top: 8px; }
-
-    .quote {
-      border-left: 3px solid var(--strong);
-      padding-left: 16px;
-      color: #374151;
-      font-size: 1.06rem;
-    }
-
-    .footer {
-      padding: 28px 0 60px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      border-top: 1px solid var(--line);
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
+      grid-template-columns: 82px 1fr;
       gap: 16px;
-      margin-top: 10px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(31, 26, 23, 0.1);
     }
-
-    @media (max-width: 820px) {
-      .stats,
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .nav {
-        align-items: flex-start;
-        padding: 14px 0;
-        flex-direction: column;
-      }
+    .hero-list li:first-child { padding-top: 0; border-top: 0; }
+    .hero-list strong, .meta { font-size: 0.76rem; color: var(--accent-2); }
+    .metrics, .signal-bar { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+    .metrics { margin-top: 28px; }
+    .metric, .signal {
+      padding: 24px 22px;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      box-shadow: 0 12px 30px rgba(88, 61, 35, 0.08);
+    }
+    .metric { min-height: 178px; }
+    .metric strong { display: block; font-size: clamp(1.55rem, 3vw, 2.4rem); letter-spacing: -0.05em; }
+    .metric span, .signal span, .section-head p { color: var(--muted); }
+    .metric span, .signal span { display: block; margin-top: 8px; font-size: 0.96rem; }
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 20px;
+    }
+    .section-head p { max-width: 72ch; }
+    .feature { background: linear-gradient(180deg, rgba(255, 251, 244, 0.92), rgba(245, 234, 220, 0.92)); }
+    .timeline { display: grid; gap: 16px; }
+    .timeline-card { position: relative; overflow: hidden; }
+    .timeline-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-3));
+    }
+    .card-header, .project-top, .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: start;
+    }
+    .card p + p, .feature p + p, .timeline-card p + p { margin-top: 12px; }
+    .bullet-list, .project-list, .coverage-list, .pub-list, .stack-list { margin: 18px 0 0; padding-left: 18px; }
+    .bullet-list li, .project-list li, .coverage-list li, .pub-list li, .stack-list li { margin-top: 10px; color: #372f2a; }
+    .bullet-list li:first-child, .project-list li:first-child, .coverage-list li:first-child, .pub-list li:first-child, .stack-list li:first-child { margin-top: 0; }
+    .inline-link { color: var(--accent); font-weight: 600; }
+    .signal { background: rgba(31, 75, 71, 0.08); border-color: rgba(31, 75, 71, 0.14); }
+    .signal strong { display: block; font-size: 1.05rem; color: var(--accent-2); }
+    .quote-card {
+      display: grid;
+      align-content: space-between;
+      gap: 24px;
+      background: linear-gradient(135deg, rgba(31, 75, 71, 0.92), rgba(16, 35, 33, 0.95));
+      color: #eff8f4;
+    }
+    .quote-card p { font-size: clamp(1.5rem, 3vw, 2.35rem); line-height: 1.15; letter-spacing: -0.04em; }
+    .quote-card span {
+      font-family: "IBM Plex Mono", monospace;
+      color: rgba(239, 248, 244, 0.72);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+    .project-card, .pub-card { display: grid; gap: 14px; }
+    .project-card h3 { font-size: 1.5rem; }
+    .pub-card strong { display: block; font-size: 1.02rem; }
+    .footer {
+      margin-top: 24px;
+      padding: 26px 0 50px;
+      border-top: 1px solid var(--line);
+      flex-wrap: wrap;
+      color: var(--muted);
+    }
+    .reveal { opacity: 0; transform: translateY(18px); animation: reveal 680ms ease forwards; }
+    .reveal:nth-child(2) { animation-delay: 120ms; }
+    .reveal:nth-child(3) { animation-delay: 220ms; }
+    @keyframes reveal { to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .button, .button-muted, .reveal { animation: none; transition: none; opacity: 1; transform: none; }
+    }
+    @media (max-width: 980px) {
+      .hero-layout, .panel-grid, .project-grid, .stack-grid, .coverage-grid, .closing-grid { grid-template-columns: 1fr; }
+      .metrics, .signal-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .section-head { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .shell { width: min(calc(100% - 24px), var(--max)); }
+      .topbar { padding: 14px 0; align-items: start; flex-direction: column; }
+      .nav { justify-content: flex-start; }
+      main { padding-top: 18px; }
+      .hero, .hero-panel, .card, .feature, .timeline-card, .quote-card { padding: 22px; }
+      h1 { max-width: 100%; font-size: clamp(2.8rem, 13vw, 4.4rem); }
+      .metrics, .signal-bar { grid-template-columns: 1fr; }
+      .hero-list li { grid-template-columns: 1fr; gap: 6px; }
+      .project-top, .card-header, .footer { flex-direction: column; }
     }
   </style>
 </head>
 <body>
   <header class="site-header">
-    <div class="wrap nav">
-      <a href="#top" class="brand">Edward Hsing</a>
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#about">About</a>
-        <a href="#work">Work</a>
+    <div class="shell topbar">
+      <a class="brand" href="#top" aria-label="Edward Hsing home">
+        <span class="brand-name">Edward Hsing</span>
+        <span class="brand-role">Open-Source Infrastructure Engineer</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <a href="#overview">Overview</a>
+        <a href="#infrastructure">Infrastructure</a>
         <a href="#projects">Projects</a>
-        <a href="#focus">Focus</a>
+        <a href="#publications">Publications</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
-
-  <main id="top" class="wrap">
-    <section class="hero" style="border-top: 0;">
-      <div class="eyebrow">Founder of DigitalPlat and EdgeAlphix LLC</div>
-      <h1>I build systems that people can actually depend on.</h1>
-      <p class="lead">
-        I am Edward Hsing. I work on internet infrastructure, operating systems, containers, DNS, networking, and open technology.
-        My projects sit between low-level engineering and public-interest infrastructure, with an emphasis on durability, scale, and real-world usefulness.
-      </p>
-      <div class="hero-actions">
-        <a class="button" href="#projects">See projects</a>
-        <a class="button-secondary" href="mailto:hi@edwarddev.com">hi@edwarddev.com</a>
+  <main id="top" class="shell">
+    <section class="hero reveal" aria-labelledby="hero-title">
+      <div class="hero-layout">
+        <div class="hero-copy">
+          <div class="eyebrow">Founder of DigitalPlat Foundation and EdgeAlphix LLC</div>
+          <h1 id="hero-title">I build internet infrastructure and systems software.</h1>
+          <p>
+            I am Edward Hsing, also known as Yujie Xing. I work on DNS, BGP, operating systems, container runtimes, and
+            network infrastructure. My projects run in production and serve users in more than 200 countries and regions.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="mailto:hi@edwarddev.com">hi@edwarddev.com</a>
+            <a class="button-muted" href="https://github.com/EdwardLab">GitHub</a>
+            <a class="button-muted" href="#projects">Selected projects</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Current roles">
+          <h2>Current roles</h2>
+          <ul class="hero-list">
+            <li>
+              <strong>2025-now</strong>
+              <span>Founder, President &amp; CEO at <a class="inline-link" href="https://edgealphix.com/">EdgeAlphix LLC</a>, where I work on IP infrastructure, BGP, and network systems.</span>
+            </li>
+            <li>
+              <strong>2022-now</strong>
+              <span>Founder &amp; President at <a class="inline-link" href="https://digitalplat.org/">DigitalPlat Foundation</a>, a nonprofit focused on open internet infrastructure.</span>
+            </li>
+            <li>
+              <strong>Research</strong>
+              <span>I have published work on FlyOS and initd, and I am writing a paper on EdgeOS.</span>
+            </li>
+          </ul>
+        </aside>
       </div>
-
-      <div class="stats" aria-label="Key stats">
-        <div class="stat">
-          <strong>400,000+</strong>
-          <span>users reached through infrastructure projects</span>
+      <div class="metrics" aria-label="Key metrics">
+        <article class="metric"><strong>500K+</strong><span>domains registered through DigitalPlat FreeDomain</span></article>
+        <article class="metric"><strong>400K+</strong><span>users served through DigitalPlat infrastructure</span></article>
+        <article class="metric"><strong>154K+</strong><span>GitHub stars on a flagship infrastructure repository</span></article>
+        <article class="metric"><strong>200+</strong><span>countries and regions reached by deployed infrastructure</span></article>
+      </div>
+    </section>
+    <section id="overview" class="reveal">
+      <div class="section-head">
+        <div>
+          <div class="micro-label">About</div>
+          <h2>I build and run systems used on the public internet.</h2>
         </div>
-        <div class="stat">
-          <strong>150,000+</strong>
-          <span>GitHub stars across open-source work</span>
+        <p>
+          My work sits between low-level systems engineering and internet infrastructure: kernels, service managers,
+          DNS, container systems, and network software.
+        </p>
+      </div>
+      <div class="panel-grid">
+        <article class="feature">
+          <div class="card-header">
+            <div>
+              <div class="meta">Background</div>
+              <h3>I like hard technical problems with real users.</h3>
+            </div>
+            <div class="meta">Anaheim, CA / Remote</div>
+          </div>
+          <p>
+            I founded DigitalPlat Foundation at 18 and started building internet infrastructure for developers,
+            students, and open communities. I later started EdgeAlphix LLC to focus on networking and infrastructure
+            work in a company setting.
+          </p>
+          <p>
+            I usually work end to end: system design, low-level implementation, deployment, and operations.
+          </p>
+          <div class="signal-bar" aria-label="Operational signals">
+            <div class="signal"><strong>10+ regions</strong><span>deployment footprint</span></div>
+            <div class="signal"><strong>8.72M</strong><span>requests in one Cloudflare reporting period</span></div>
+            <div class="signal"><strong>2M+</strong><span>page views in the same period</span></div>
+            <div class="signal"><strong>100GB+</strong><span>bandwidth in the same period</span></div>
+          </div>
+        </article>
+        <aside class="quote-card">
+          <p>Current focus: DNS and naming systems, operating systems, IPv6 and BGP, containers, and infrastructure tooling.</p>
+          <span>Focus</span>
+        </aside>
+      </div>
+    </section>
+    <section id="infrastructure" class="reveal">
+      <div class="section-head">
+        <div>
+          <div class="micro-label">Companies</div>
+          <h2>What I am building now.</h2>
         </div>
-        <div class="stat">
-          <strong>2</strong>
-          <span>organizations founded and actively led</span>
-        </div>
-        <div class="stat">
-          <strong>Global</strong>
-          <span>focus across systems, networks, and open access</span>
+        <p>
+          DigitalPlat FreeDomain is the largest project today, but the broader work also includes OpenSource.ngo and
+          the network build-out at EdgeAlphix.
+        </p>
+      </div>
+      <div class="timeline">
+        <article class="timeline-card">
+          <div class="card-header">
+            <div>
+              <div class="meta">Flagship project</div>
+              <h3>DigitalPlat FreeDomain</h3>
+            </div>
+            <div class="meta">DNS / provisioning / abuse handling</div>
+          </div>
+          <p>
+            FreeDomain gives people free domains and subdomains through a DNS platform I built and run through
+            DigitalPlat. Most of the work has been done by one person.
+          </p>
+          <ul class="bullet-list">
+            <li>500,000+ domains registered and actively used across more than 200 countries and regions.</li>
+            <li>154,000+ GitHub stars, placing the repository among the most starred projects globally.</li>
+            <li>Deployed across 10+ regions and used in 200+ countries and regions.</li>
+            <li>Supported by Cloudflare, GitHub, 1Password, Twilio, Vercel, and Hack Club programs.</li>
+          </ul>
+          <div class="link-row">
+            <a class="inline-link" href="https://domain.digitalplat.org/">Platform</a>
+            <a class="inline-link" href="https://github.com/DigitalPlatDev/FreeDomain">GitHub</a>
+            <a class="inline-link" href="https://digitalplat.org/">Foundation</a>
+          </div>
+        </article>
+        <div class="closing-grid">
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="meta">Project</div>
+                <h3>OpenSource.ngo</h3>
+              </div>
+              <div class="meta">Licenses</div>
+            </div>
+            <p>
+              OpenSource.ngo is a project to organize open-source licenses in a cleaner, machine-readable format. It
+              currently includes 167 SPDX licenses with full text and provenance.
+            </p>
+            <div class="link-row">
+              <a class="inline-link" href="https://opensource.ngo/">Visit site</a>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <div class="meta">Company</div>
+                <h3>EdgeAlphix Infrastructure</h3>
+              </div>
+              <div class="meta">AS201248</div>
+            </div>
+            <p>
+              EdgeAlphix is where I am building IP infrastructure, BGP peering, and the base for a larger network.
+            </p>
+            <ul class="bullet-list">
+              <li>Allocated IP address space with active ASN integration work.</li>
+              <li>Ongoing BGP peer deployment and groundwork for future Anycast capabilities.</li>
+              <li>The network is being built for global use, not a single region.</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
-
-    <section id="about">
-      <h2>About</h2>
-      <p class="section-intro">
-        I started building systems young, and that curiosity turned into infrastructure used by people around the world. Today, I split my work across nonprofit and commercial efforts, while staying deeply hands-on with architecture, code, operations, and product direction.
-      </p>
-      <div class="grid-2">
-        <article class="card">
-          <h3>DigitalPlat</h3>
+    <section id="projects" class="reveal">
+      <div class="section-head">
+        <div>
+          <div class="micro-label">Projects</div>
+          <h2>Technical projects.</h2>
+        </div>
+        <p>
+          I also build lower-level systems directly, including kernels, service managers, mobile Linux environments, and
+          developer tooling.
+        </p>
+      </div>
+      <div class="project-grid">
+        <article class="card project-card">
+          <div class="project-top">
+            <h3>EdgeOS</h3>
+            <div class="meta">Operating system</div>
+          </div>
           <p>
-            DigitalPlat is my nonprofit work focused on internet freedom, open-source infrastructure, and lowering barriers to access. The goal is simple: useful technology should not be locked behind unnecessary gatekeeping.
+            EdgeOS is an operating system that implements a substantial subset of Linux at the syscall and userspace
+            level so standard Linux programs can run without modification.
           </p>
+          <ul class="project-list">
+            <li>Multi-user UNIX environment with ext4, process isolation, and a Linux-compatible syscall ABI.</li>
+            <li>Runs BusyBox, OpenSSL, Dropbear SSH, and CPython 3.12 unmodified.</li>
+            <li>Includes IPv4/IPv6 networking, framebuffer support, USB 3.0 xHCI, and persistent storage.</li>
+          </ul>
+          <div class="link-row"><a class="inline-link" href="https://github.com/EdwardLab/EdgeOS">GitHub</a></div>
         </article>
-        <article class="card">
-          <h3>EdgeAlphix LLC</h3>
+        <article class="card project-card">
+          <div class="project-top">
+            <h3>FlyOS</h3>
+            <div class="meta">Containers on Android</div>
+          </div>
           <p>
-            EdgeAlphix is where I move faster on infrastructure engineering, systems work, and production-facing experiments. It is built around reliable technology, open standards, and long-term operational thinking.
+            FlyOS turns Android devices into persistent Linux workstations without kernel changes.
           </p>
+          <ul class="project-list">
+            <li>Runs full Linux environments via chroot with multi-container support.</li>
+            <li>Includes terminal, noVNC desktop access, service management, and remote access paths.</li>
+            <li>Supports WINE, ADB integration, VPN access, USB networking, and Cloudflare tunneling.</li>
+          </ul>
+          <div class="link-row">
+            <a class="inline-link" href="https://github.com/EdwardLab/flyos">GitHub</a>
+            <a class="inline-link" href="https://doi.org/10.36227/techrxiv.174430481.17747117/v1">Paper</a>
+          </div>
+        </article>
+        <article class="card project-card">
+          <div class="project-top">
+            <h3>initd</h3>
+            <div class="meta">Minimal service manager</div>
+          </div>
+          <p>
+            initd is a lightweight, systemd-compatible init system that can run unmodified systemd service files without
+            systemd itself.
+          </p>
+          <ul class="project-list">
+            <li>Drop-in compatible service model and familiar systemctl workflow.</li>
+            <li>Works as PID 1 or as a standalone manager with full process supervision.</li>
+            <li>Built for containers, embedded environments, and stripped-down Linux systems.</li>
+          </ul>
+        </article>
+        <article class="card project-card">
+          <div class="project-top">
+            <h3>GPTWiki</h3>
+            <div class="meta">AI documentation pipeline</div>
+          </div>
+          <p>
+            GPTWiki is a system for generating structured wiki-style content from crawled sources and automated
+            publishing workflows.
+          </p>
+          <ul class="project-list">
+            <li>Configurable ingestion from Reddit, Stack Overflow, and other sources.</li>
+            <li>Structured content generation designed for knowledge extraction at scale.</li>
+            <li>Integrated with Pywikibot-based publishing workflows.</li>
+          </ul>
+          <div class="link-row"><a class="inline-link" href="https://github.com/EdwardLab/GPTWiki">GitHub</a></div>
         </article>
       </div>
     </section>
-
-    <section id="work">
-      <h2>What I work on</h2>
-      <p class="section-intro">
-        Most of my projects live close to the metal. I like building things end to end, from low-level mechanics to systems that can survive real use.
-      </p>
-      <div class="grid-2">
-        <article class="card">
-          <h3>Infrastructure and networking</h3>
-          <ul class="compact-list">
-            <li>DNS and naming systems</li>
-            <li>Routing, interconnection, and global infrastructure</li>
-            <li>Cloud and edge environments</li>
-            <li>Operational tooling, abuse handling, and reliability work</li>
+    <section id="publications" class="reveal">
+      <div class="section-head">
+        <div>
+          <div class="micro-label">Publications</div>
+          <h2>Papers and technical background.</h2>
+        </div>
+        <p>
+          My papers are mostly about Linux compatibility, container environments, and service management.
+        </p>
+      </div>
+      <div class="stack-grid">
+        <article class="card pub-card">
+          <h3>Selected publications</h3>
+          <ul class="pub-list">
+            <li>
+              <strong>Enabling Persistent Linux Containers and Desktop Environments on Android Devices</strong>
+              IEEE TechRxiv, 2025.
+              <a class="inline-link" href="https://doi.org/10.36227/techrxiv.174430481.17747117/v1">DOI</a>
+            </li>
+            <li>
+              <strong>Initd: A Lightweight Init System with Systemd Compatibility for Constrained and Containerized Linux Environments</strong>
+              Zenodo, 2026.
+              <a class="inline-link" href="https://doi.org/10.5281/ZENODO.19294001">DOI</a>
+            </li>
+            <li><strong>Ongoing paper</strong> EdgeOS: A Linux-Compatible Operating System Kernel with Syscall-Level Behavioral Alignment.</li>
           </ul>
         </article>
         <article class="card">
-          <h3>Systems engineering</h3>
-          <ul class="compact-list">
-            <li>Operating systems and kernel-level engineering</li>
-            <li>Containers, virtualization, and portable runtimes</li>
-            <li>Linux-compatible tooling and execution environments</li>
-            <li>Embedded systems and applied cybersecurity</li>
+          <h3>Core technologies</h3>
+          <ul class="stack-list">
+            <li>C, C++, Rust, Go, Python, and Bash across systems and infrastructure tooling.</li>
+            <li>Linux internals, syscall behavior, process models, memory management, and init systems.</li>
+            <li>Docker, LXC, chroot, proot, unshare, QEMU, KVM, Kubernetes, and Proxmox VE.</li>
+            <li>BIND DNS, BGP, IPv6, Anycast, distributed systems, and TCP/IP protocol engineering.</li>
+            <li>ext4, ELF binaries, toolchains, embedded systems, Android internals, and framework-level work.</li>
+            <li>Next.js, React, Ethereum, Solidity, LLM integration, and automation pipelines.</li>
           </ul>
         </article>
       </div>
     </section>
-
-    <section id="projects">
-      <h2>Selected projects</h2>
-      <p class="section-intro">
-        A few of the things I am best known for right now.
-      </p>
-      <div class="grid-2">
+    <section class="reveal">
+      <div class="section-head">
+        <div>
+          <div class="micro-label">Press</div>
+          <h2>Selected coverage.</h2>
+        </div>
+        <p>
+          DigitalPlat FreeDomain and related projects have been covered by technology publications and developer media.
+        </p>
+      </div>
+      <div class="coverage-grid">
         <article class="card">
-          <h3>DigitalPlat FreeDomain</h3>
-          <p>
-            A large-scale domain infrastructure project that gives builders, students, and open communities access to free subdomains and managed DNS tooling.
-          </p>
-          <ul>
-            <li>400,000+ users worldwide</li>
-            <li>Automated provisioning and abuse mitigation</li>
-            <li><a href="https://domain.digitalplat.org/">Visit project</a></li>
-            <li><a href="https://github.com/DigitalPlatDev/FreeDomain">GitHub repository</a></li>
+          <h3>Selected coverage</h3>
+          <ul class="coverage-list">
+            <li><a class="inline-link" href="https://www.searchenginejournal.com/free-domain-names/554514/">Search Engine Journal</a></li>
+            <li><a class="inline-link" href="https://www.thetechoutlook.com/new-release/software-apps/digitalplat-freedomain-now-offers-free-open-source-domain-for-everyone/">The Tech Outlook</a></li>
+            <li><a class="inline-link" href="https://www.w3era.com/news/seo/free-domain-names-digitalplat-cloudflare-github/">W3era</a></li>
+            <li><a class="inline-link" href="https://softouchsystems.com/2025/09/03/free-domain-names-digitalplat-open-source/">SofTouch Systems</a></li>
           </ul>
         </article>
-
         <article class="card">
-          <h3>EdgeOS</h3>
-          <p>
-            An independently engineered operating system effort focused on execution environments, kernel architecture, Linux compatibility, and practical systems research.
-          </p>
-        </article>
-
-        <article class="card">
-          <h3>FlyOS</h3>
-          <p>
-            A mobile Linux container system designed for portable computing environments, exploring how flexible system access can exist beyond traditional desktop assumptions.
-          </p>
-        </article>
-
-        <article class="card">
-          <h3>OpenSource.ngo</h3>
-          <p>
-            A DigitalPlat project focused on license infrastructure, canonical open-source license texts, and making legal clarity more accessible to developers and maintainers.
-          </p>
-          <ul>
-            <li><a href="https://opensource.ngo/">Visit project</a></li>
+          <h3>Stories and signals</h3>
+          <ul class="coverage-list">
+            <li><a class="inline-link" href="https://dev.to/edwardhsing">Personal story on Dev.to</a></li>
+            <li>HelloGitHub recommendation and broader community reposts.</li>
+            <li>@githubprojects coverage on X with 2.6M views and 33K likes.</li>
+            <li>Additional pickup across Chinese developer platforms including Zhihu, Toutiao, and CSDN.</li>
           </ul>
         </article>
       </div>
     </section>
-
-    <section id="focus">
-      <h2>How I think about building</h2>
-      <div class="grid-2">
-        <article class="card">
-          <h3>Useful over theatrical</h3>
-          <p>
-            I care more about systems that hold up under pressure than polished demos that collapse in real use. Reliability matters. Clear behavior matters. Honest engineering matters.
-          </p>
-        </article>
-        <article class="card">
-          <h3>Open where it counts</h3>
-          <p>
-            I believe open technology expands access, improves trust, and creates better long-term infrastructure. A lot of my work is public, inspectable, and grounded in that idea.
-          </p>
-        </article>
+    <section id="contact" class="reveal">
+      <div class="section-head">
+        <div>
+          <div class="micro-label">Contact</div>
+          <h2>Email is the best way to reach me.</h2>
+        </div>
+        <p>
+          For code, papers, and public work, GitHub and ORCID are the best references.
+        </p>
       </div>
-      <p class="quote">
-        The internet should be more open, more durable, and more useful to the people building on it.
-      </p>
-    </section>
-
-    <section>
-      <h2>Roles</h2>
-      <div class="grid-2">
+      <div class="closing-grid" style="grid-template-columns: 1fr;">
         <article class="card">
-          <h3>Founder &amp; President</h3>
-          <p>EdgeAlphix LLC</p>
-        </article>
-        <article class="card">
-          <h3>Founder</h3>
-          <p>DigitalPlat</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="contact">
-      <h2>Contact</h2>
-      <p class="section-intro">
-        If your work overlaps with infrastructure, systems, open technology, or something ambitious that should exist but does not yet, feel free to reach out.
-      </p>
-      <div class="grid-2">
-        <article class="card">
-          <h3>Email</h3>
-          <p><a href="mailto:hi@edwarddev.com">hi@edwarddev.com</a></p>
-        </article>
-        <article class="card">
-          <h3>Links</h3>
-          <p><a href="https://github.com/DigitalPlatDev">GitHub</a></p>
-          <p><a href="https://edgealphix.com/">EdgeAlphix</a></p>
-          <p><a href="https://domain.digitalplat.org/">DigitalPlat FreeDomain</a></p>
+          <h3>Direct links</h3>
+          <ul class="coverage-list">
+            <li><a class="inline-link" href="mailto:hi@edwarddev.com">hi@edwarddev.com</a></li>
+            <li><a class="inline-link" href="https://github.com/EdwardLab">GitHub / EdwardLab</a></li>
+            <li><a class="inline-link" href="https://orcid.org/0009-0003-8283-8615">ORCID</a></li>
+          </ul>
         </article>
       </div>
     </section>
   </main>
-
-  <footer class="wrap footer">
-    <div>© 2026 Edward Hsing. Built as a fast, simple, content-first homepage.</div>
+  <footer class="shell footer">
+    <div>Copyright 2026 Edward Hsing.</div>
     <div class="footer-links">
-      <a href="https://github.com/DigitalPlatDev">GitHub</a>
+      <a href="https://digitalplat.org/">DigitalPlat</a>
       <a href="https://edgealphix.com/">EdgeAlphix</a>
-      <a href="https://domain.digitalplat.org/">DigitalPlat</a>
-      <a href="mailto:hi@edwarddev.com">Email</a>
+      <a href="https://domain.digitalplat.org/">FreeDomain</a>
+      <a href="https://github.com/EdwardLab">GitHub</a>
     </div>
   </footer>
 </body>
