@@ -117,6 +117,32 @@
       letter-spacing: 0.08em;
       color: var(--muted);
     }
+    .nav-toggle {
+      display: none;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 1px solid rgba(31, 26, 23, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 251, 244, 0.7);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .nav-toggle-lines {
+      display: inline-grid;
+      gap: 5px;
+    }
+    .nav-toggle-lines span {
+      display: block;
+      width: 18px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 999px;
+      transition: transform 180ms ease, opacity 180ms ease;
+    }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-lines span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-lines span:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .nav-toggle-lines span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .nav a:hover, .nav a:focus-visible, .inline-link:hover, .inline-link:focus-visible { color: var(--accent); }
     main { padding: 40px 0 96px; }
     section { margin-top: 28px; }
@@ -286,8 +312,18 @@
     }
     @media (max-width: 720px) {
       .shell { width: min(calc(100% - 24px), var(--max)); }
-      .topbar { padding: 14px 0; align-items: start; flex-direction: column; }
-      .nav { justify-content: flex-start; }
+      .topbar { padding: 14px 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+      .brand { min-width: 0; }
+      .nav-toggle { display: inline-flex; align-items: center; justify-content: center; }
+      .nav {
+        display: none;
+        grid-column: 1 / -1;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 18px 0 4px;
+      }
+      .nav.is-open { display: flex; }
       main { padding-top: 18px; }
       .hero, .hero-panel, .card, .feature, .timeline-card, .quote-card { padding: 22px; }
       h1 { max-width: 100%; font-size: clamp(2.8rem, 13vw, 4.4rem); }
@@ -304,7 +340,14 @@
         <span class="brand-name">Edward Hsing</span>
         <span class="brand-role">Open-Source Infrastructure Engineer</span>
       </a>
-      <nav class="nav" aria-label="Primary">
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open navigation">
+        <span class="nav-toggle-lines" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+      <nav id="primary-nav" class="nav" aria-label="Primary">
         <a href="#overview">Overview</a>
         <a href="#infrastructure">Infrastructure</a>
         <a href="#projects">Projects</a>
@@ -344,7 +387,7 @@
               </li>
               <li>
                 <strong>2022-now</strong>
-                <span>Founder &amp; President at <a class="inline-link" href="https://digitalplat.org/">DigitalPlat Foundation</a>, which operates public internet infrastructure used globally in production.</span>
+                <span>Founder &amp; President at <a class="inline-link" href="https://digitalplat.org/">DigitalPlat Foundation</a>, which operates public internet infrastructure used globally in production and is fiscally sponsored as a 501(c)(3) by The Hack Foundation.</span>
               </li>
               <li>
                 <strong>Research</strong>
@@ -383,8 +426,8 @@
           <p>
             Infrastructure work started at 15, with a focus on systems that handle real users rather than experimental
             prototypes. DigitalPlat Foundation was later established to build internet infrastructure for developers,
-            students, and open communities, with the same expectation that the systems would carry live traffic and stay
-            reliable in production.
+            students, and open communities, and is fiscally sponsored as a 501(c)(3) by The Hack Foundation. The same
+            expectation remained throughout: the systems needed to carry live traffic and stay reliable in production.
           </p>
           <p>
             That approach continues through EdgeAlphix LLC in the U.S., with end-to-end ownership across system design,
@@ -639,5 +682,36 @@
       <a href="https://github.com/EdwardLab">GitHub</a>
     </div>
   </footer>
+  <script>
+    const navToggle = document.querySelector(".nav-toggle");
+    const nav = document.querySelector("#primary-nav");
+
+    if (navToggle && nav) {
+      navToggle.addEventListener("click", () => {
+        const isOpen = navToggle.getAttribute("aria-expanded") === "true";
+        navToggle.setAttribute("aria-expanded", String(!isOpen));
+        navToggle.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
+        nav.classList.toggle("is-open", !isOpen);
+      });
+
+      nav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (window.innerWidth <= 720) {
+            navToggle.setAttribute("aria-expanded", "false");
+            navToggle.setAttribute("aria-label", "Open navigation");
+            nav.classList.remove("is-open");
+          }
+        });
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 720) {
+          navToggle.setAttribute("aria-expanded", "false");
+          navToggle.setAttribute("aria-label", "Open navigation");
+          nav.classList.remove("is-open");
+        }
+      });
+    }
+  </script>
 </body>
 </html>
